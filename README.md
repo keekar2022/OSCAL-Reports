@@ -1,0 +1,543 @@
+# 🛡️ Keekar's OSCAL SOA/SSP/CCM Generator
+
+**A comprehensive web application for generating compliance documentation from OSCAL catalogs**
+
+Version 2.0 | January 2025
+
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+---
+
+## 📖 Overview
+
+**Keekar's OSCAL SOA/SSP/CCM Generator** is a powerful tool for creating **Statement of Applicability (SOA)**, **System Security Plans (SSP)**, and **Cloud Control Matrix (CCM)** documents from OSCAL (Open Security Controls Assessment Language) catalogs.
+
+### 🎯 Key Features
+
+- ✨ **New Workflow**: Load existing reports first, then update catalogs intelligently
+- 📚 **Multiple Frameworks**: NIST SP 800-53, Australian ISM, Singapore IM8
+- 📊 **Multiple Export Formats**: OSCAL JSON, Excel, PDF, and CCM
+- 🔄 **Smart Catalog Updates**: Automatically detect new/changed controls
+- 💾 **Data Persistence**: Browser-based local storage for multi-session work
+- ⚡ **Auto-save**: Automatic progress saving
+- 🎨 **Modern UI**: Intuitive, responsive interface
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js** 20+ (for local development)
+- **Modern web browser** (Chrome, Firefox, Safari, Edge)
+
+### Local Development Setup
+
+```bash
+# Clone or download the repository
+cd OSCAL-Report-Generator-V1
+
+# Run the setup script
+chmod +x setup.sh
+./setup.sh
+
+# Start the application in development mode
+npm run dev
+
+# Or start the production server
+cd backend
+node server.js
+
+# Access the application
+open http://localhost:3019
+```
+
+### TrueNAS Server Deployment
+
+For deployment on **nas.keekar.com** or other TrueNAS servers:
+
+1. **Build the Frontend**
+   ```bash
+   cd frontend
+   npm install
+   npm run build
+   ```
+
+2. **Copy Built Files**
+   ```bash
+   cp -r frontend/dist backend/public
+   ```
+
+3. **Install Backend Dependencies**
+   ```bash
+   cd backend
+   npm install
+   ```
+
+4. **Start the Server**
+   ```bash
+   cd backend
+   NODE_ENV=production node server.js
+   ```
+
+5. **Access from Network**
+   - Open browser to `http://nas.keekar.com:3019`
+   - Or use the server's IP address: `http://<server-ip>:3019`
+
+---
+
+## 🔒 OSCAL & Metaschema Framework Compliance
+
+This tool follows **OSCAL (Open Security Controls Assessment Language)** standards and implements validation using the **Metaschema Framework**.
+
+**Key Standards:**
+- ✅ OSCAL Catalog Layer - Reads official catalogs
+- ✅ OSCAL Profile Layer - Supports resolved profiles  
+- ✅ OSCAL SSP Layer - Generates System Security Plans
+- ✅ **JSON Schema Validation** - Integrated AJV v8 with official OSCAL JSON Schema v1.1.2
+- ✅ **Real-time Validation** - Validates documents against Metaschema Framework standards
+
+**Validation powered by:**
+- Official OSCAL JSON Schema (v1.1.2, 243KB) from [oscal-editor](https://github.com/metaschema-framework/oscal-editor)
+- AJV v8 JSON Schema Validator with format validation
+- Multi-tier validation strategy (Schema → Basic → CLI future)
+
+**For detailed validation features, Metaschema Framework integration, and permissive validation strategy, see:**  
+📖 **[ENHANCEMENTS.md - Metaschema Framework & OSCAL Validation](ENHANCEMENTS.md#metaschema-framework--oscal-validation)**
+
+---
+
+## 📋 How It Works
+
+### New Workflow (Version 2.0)
+
+#### 1️⃣ **Initial Choice**
+Choose your starting point:
+- **📂 Load Existing Report**: Continue working on a previous compliance report
+- **✨ Start New Report**: Begin from scratch with a fresh catalog
+
+#### 2️⃣ **Catalog Selection**
+
+**If loading existing report:**
+- System extracts your current catalog
+- Choose to:
+  - ✅ Keep current catalog version (all data pre-populated)
+  - 🔄 Update to latest version (identifies new/changed controls)
+
+**If starting fresh:**
+- Select from built-in catalogs or provide custom URL
+
+#### 3️⃣ **System Information**
+Document your system details:
+- System name, ID, description
+- Data/System classification level
+- Security impact levels (CIA)
+- System status
+
+#### 4️⃣ **Control Implementation**
+For each control, document:
+- **Implementation Status**: 7 status options with color coding
+- **Implementation Details**: How the control is implemented
+- **Responsible Party**: Shared, Consumer, CSP
+- **Consumer Guidance**: Instructions for configuration/implementation
+- **Cloud Provider Responsibility**: Inherited, Implementer, Option Provider
+- **Control Type**: Policy, Process, Orchestrated, or Automated
+- **Testing & Evidence**: Methods, frequency, last test date
+- **Risk Assessment**: Rating and compensating controls
+
+#### 5️⃣ **Export Documentation**
+Generate reports in multiple formats:
+- **OSCAL JSON**: Standard OSCAL SSP format
+- **Excel**: Detailed spreadsheet
+- **PDF**: Formatted compliance report
+- **CCM**: Cloud Control Matrix (Australian ISM)
+
+---
+
+## 🎨 Features in Detail
+
+### Supported OSCAL Catalogs
+
+1. **Australian ISM (ACSC)**
+   - Non-Classified Baseline
+   - Official Sensitive Baseline
+   - Protected Baseline
+   - Secret Baseline
+   - Top Secret Baseline
+
+2. **NIST SP 800-53 Rev 5**
+   - Full catalog with all control families
+
+3. **Singapore IM8 Reform**
+   - GovTech Singapore standards
+
+4. **Custom Catalogs**
+   - Provide any OSCAL-compliant catalog URL
+
+### Implementation Status Options
+
+- 🔴 **Not Assessed**: Control not yet reviewed
+- 🟢 **Effective**: Control is working as intended
+- 🔵 **Alternate Control**: Alternative implementation in place
+- 🟠 **Ineffective**: Control not meeting objectives
+- ⚪ **No Visibility**: Cannot assess effectiveness
+- 🟣 **Not Implemented**: Control not yet deployed
+- ⚫ **Not Applicable**: Control not relevant to system
+
+### Search and Filter
+
+- Search by control ID or title
+- Filter by control group/domain
+- Filter by implementation status
+- Filter by change status (new/changed/unchanged)
+- Bulk actions for status updates
+
+### Data Management
+
+- **Auto-save**: Saves every 2 seconds
+- **Manual save**: Save progress on demand
+- **Load saved data**: Resume from browser storage
+- **Clear data**: Start fresh when needed
+- **Export/Import**: Download and upload SSP JSON files
+
+---
+
+## 📊 Export Formats
+
+### 1. OSCAL SSP JSON
+
+Standard OSCAL 1.1.2 format with:
+- System characteristics
+- Control implementation statements
+- Responsible roles and parties
+- Implementation status and remarks
+- Original catalog metadata
+
+### 2. Excel Export
+
+Comprehensive spreadsheet with:
+- Control details and descriptions
+- Implementation information
+- Status and dates
+- Testing and evidence
+- Risk assessments
+- Color-coded status indicators
+
+### 3. PDF Report
+
+Professional compliance report including:
+- Cover page
+- System information summary
+- Control assessment overview
+- Detailed control implementations
+- Status indicators and formatting
+
+### 4. Cloud Control Matrix (CCM)
+
+Australian ISM-specific format with:
+- ACSC ISM control mappings
+- Cloud provider responsibilities
+- Consumer guidance
+- Technical controls
+- Policy and process controls
+- Summary statistics sheet
+
+---
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `NODE_ENV` | `production` | Node environment mode |
+| `PORT` | `3019` | Server port |
+
+### Port Configuration
+
+Change the port by setting the `PORT` environment variable:
+
+```bash
+PORT=8080 node server.js
+```
+
+---
+
+## 🛠️ Development
+
+### Project Structure
+
+```
+OSCAL-Report-Generator-V1/
+├── backend/                 # Node.js + Express backend
+│   ├── server.js           # Main server file
+│   ├── ccmExport.js        # CCM Excel generation
+│   ├── ccmImport.js        # CCM import functionality
+│   ├── pdfExport.js        # PDF generation
+│   ├── sspComparisonV3.js  # Catalog comparison logic
+│   ├── package.json        # Backend dependencies
+│   └── public/             # Built frontend files
+│
+├── frontend/               # React frontend
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── utils/          # Utility functions
+│   │   ├── App.jsx         # Main application component
+│   │   └── App.css         # Global styles
+│   ├── package.json        # Frontend dependencies
+│   └── vite.config.js      # Vite configuration
+│
+├── setup.sh                # Setup script
+├── ARCHITECTURE.md         # Architecture documentation
+└── README.md               # This file
+```
+
+### Tech Stack
+
+**Backend:**
+- Node.js 20
+- Express.js
+- ExcelJS (Excel generation)
+- PDFKit (PDF generation)
+- Axios (HTTP client)
+
+**Frontend:**
+- React 18
+- Vite (build tool)
+- CSS3 (styling)
+- Local Storage API (data persistence)
+
+### Development Commands
+
+```bash
+# Run both backend and frontend in development mode
+npm run dev
+
+# Backend only (with auto-reload)
+cd backend
+npm run dev
+
+# Frontend only (with hot reload)
+cd frontend
+npm run dev
+
+# Build frontend for production
+cd frontend
+npm run build
+```
+
+---
+
+## 📚 API Endpoints
+
+### Health Check
+```
+GET /health
+Response: {"status":"healthy","service":"Keekar's OSCAL SOA/SSP/CCM Generator"}
+```
+
+### Fetch OSCAL Catalog
+```
+POST /api/fetch-catalogue
+Body: { "url": "https://example.com/catalog.json" }
+```
+
+### Extract Catalog from SSP
+```
+POST /api/extract-catalog-from-ssp
+Body: { "sspData": {...} }
+```
+
+### Extract Controls from SSP
+```
+POST /api/extract-controls-from-ssp
+Body: { "catalogControls": [...], "existingSSP": {...} }
+```
+
+### Compare SSP with Catalog
+```
+POST /api/compare-ssp
+Body: { "catalogControls": [...], "existingSSP": {...}, "catalogData": {...} }
+```
+
+### Generate SSP
+```
+POST /api/generate-ssp
+Body: { "metadata": {...}, "controls": [...], "systemInfo": {...} }
+```
+
+### Generate Excel
+```
+POST /api/generate-excel
+Body: { "controls": [...], "systemInfo": {...} }
+Response: Excel file (binary)
+```
+
+### Generate PDF
+```
+POST /api/generate-pdf
+Body: { "metadata": {...}, "controls": [...], "systemInfo": {...} }
+Response: PDF file (binary)
+```
+
+### Generate CCM
+```
+POST /api/generate-ccm
+Body: { "controls": [...], "systemInfo": {...} }
+Response: Excel file (binary)
+```
+
+### Import CCM
+```
+POST /api/import-ccm
+Body: { "fileData": "<base64-encoded-excel>" }
+Response: { "systemInfo": {...}, "controls": [...], "statistics": {...} }
+```
+
+---
+
+## 🔐 Security Considerations
+
+- All data is stored in browser local storage (client-side)
+- No sensitive data is stored on the server
+- Catalog URLs are fetched server-side to avoid CORS issues
+- Health check endpoint for monitoring
+- No authentication required (deploy behind reverse proxy if needed)
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**1. Port already in use**
+```bash
+# Find and kill process on port 3019
+lsof -i :3019
+kill -9 <PID>
+```
+
+**2. Frontend not loading**
+```bash
+# Rebuild frontend
+cd frontend && npm run build
+cp -r dist ../backend/public
+```
+
+**3. Health check fails**
+```bash
+# Check if server is running
+curl http://localhost:3019/health
+
+# Check logs
+cd backend
+tail -f server.log
+```
+
+**4. Cannot access from network (TrueNAS)**
+- Ensure the server is listening on `0.0.0.0` (not just `localhost`)
+- Check firewall settings on the server
+- Verify port 3019 is open and forwarded correctly
+- Test with: `curl http://<server-ip>:3019/health`
+
+---
+
+## 📈 Roadmap
+
+### Version 2.1 (Planned)
+- [ ] User authentication and multi-user support
+- [ ] Database backend for persistent storage
+- [ ] Collaborative editing
+- [ ] Version control for SSP documents
+- [ ] API key management for external catalogs
+- [ ] Scheduled compliance reporting
+
+### Version 3.0 (Future)
+- [ ] Assessment and POA&M module
+- [ ] Integration with GRC tools
+- [ ] Automated control testing
+- [ ] Compliance dashboard
+- [ ] Multi-tenant support
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) file for details.
+
+**Copyright (c) 2025 Mukesh Kesharwani**
+
+---
+
+## 👨‍💻 Author
+
+**Mukesh Kesharwani**
+- Email: mukesh.kesharwani@adobe.com
+- Affiliation: Adobe
+
+---
+
+## 🙏 Acknowledgments
+
+- **NIST** for the OSCAL standard and reference implementations
+- **Australian Cyber Security Centre (ACSC)** for ISM OSCAL catalogs
+- **GovTech Singapore** for IM8 standards
+- **Open source community** for the amazing tools and libraries
+
+---
+
+## 📚 Documentation
+
+This project maintains 5 essential documentation files:
+
+1. **[README.md](README.md)** - This file - Overview, quick start, and features
+2. **[ARCHITECTURE.md](ARCHITECTURE.md)** - Technical architecture, API endpoints, data flow
+3. **[TRUENAS_DEPLOYMENT.md](TRUENAS_DEPLOYMENT.md)** - TrueNAS SCALE deployment guide
+4. **[DEPLOYMENT_TO_SMB.md](DEPLOYMENT_TO_SMB.md)** - SMB share deployment instructions
+5. **[ENHANCEMENTS.md](ENHANCEMENTS.md)** - Enhancement history, Metaschema Framework validation
+
+### Quick Links
+
+- **Validation Features**: [ENHANCEMENTS.md - Metaschema Framework & OSCAL Validation](ENHANCEMENTS.md#metaschema-framework--oscal-validation)
+- **API Documentation**: [ARCHITECTURE.md - API Endpoints](ARCHITECTURE.md)
+- **Deployment Guides**: [TRUENAS_DEPLOYMENT.md](TRUENAS_DEPLOYMENT.md) | [DEPLOYMENT_TO_SMB.md](DEPLOYMENT_TO_SMB.md)
+
+---
+
+## 📞 Support
+
+For issues, questions, or feature requests:
+
+- **GitHub Issues**: Open an issue on the repository
+- **Documentation**: See above for all available documentation
+- **Server**: Access at nas.keekar.com:3019
+- **Email**: mukesh.kesharwani@adobe.com
+
+---
+
+## 📊 Statistics
+
+- **7 Implementation Status Options** with color coding
+- **5 Australian ISM Baseline Levels** supported
+- **4 Export Formats** (OSCAL JSON, Excel, PDF, CCM)
+- **3 Built-in Framework Catalogs** (NIST, ACSC, Singapore)
+- **1 Powerful Tool** for compliance documentation
+
+---
+
+**Made with Passion by Mukesh Kesharwani**
+
+*Simplifying compliance documentation, one control at a time.*
+# OSCAL-Reports
