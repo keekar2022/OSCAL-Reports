@@ -11,5 +11,34 @@
     }
   },
   "publishedSoaUrl": "https://raw.githubusercontent.com/keekar2022/OSCAL-Reports/refs/heads/main/AEMGovAu_ComplianceReport_Sample_2025-11-20.json",
-  "lastModified": "2025-11-25T04:20:55.896Z"
+  "messagingConfig": {
+    "enabled": false,
+    "channel": "email",
+    "email": {
+      "enabled": false,
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpSecure": false,
+      "smtpUser": "",
+      "smtpPassword": "",
+      "fromEmail": "",
+      "fromName": "OSCAL Report Generator",
+      "loginUrl": ""
+    },
+    "slack": {
+      "enabled": false,
+      "webhookUrl": "",
+      "channel": "#general"
+    }
+  },
+  "aiConfig": {
+    "enabled": true,
+    "url": "http://192.168.1.111:11434",
+    "apiToken": "",
+    "model": "qwen3:4b",
+    "timeout": 120000,
+    "organizationName": "Adobe"
+  },
+  "lastModified": "2025-12-15T20:46:23.297Z",
+  "version": "1.0.0"
 }
