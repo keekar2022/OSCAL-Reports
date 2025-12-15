@@ -1,0 +1,46 @@
+[
+  {
+    "id": "f688621c-5468-4c4b-8824-bf0ad53090cf",
+    "username": "admin",
+    "password": "pbkdf2$sha256$100000$c842b3dae3d3727fbcd9bd677b729a7f$35e615074717735df6354d6715b494f4880c1109a9919b95c66467846d33cfd8",
+    "email": "admin@example.com",
+    "role": "Platform Admin",
+    "fullName": "Platform Administrator",
+    "createdAt": "2025-11-24T02:42:55.642Z",
+    "isActive": true,
+    "updatedAt": "2025-11-27T00:15:36.576Z"
+  },
+  {
+    "id": "5f39e939-b146-4ee3-895e-926e7fa42f08",
+    "username": "user",
+    "password": "pbkdf2$sha256$100000$a475edf054faf2bff67cb7447781cd69$5191ccbf0584f7d27467f18c6881f896a834be37c0f82d3253bb6608bed8e3fa",
+    "email": "user@example.com",
+    "role": "User",
+    "fullName": "Standard User",
+    "createdAt": "2025-11-24T02:42:55.642Z",
+    "isActive": true,
+    "updatedAt": "2025-11-27T00:15:36.585Z"
+  },
+  {
+    "id": "150fd938-1d08-4978-b889-b35663408b3e",
+    "username": "assessor",
+    "password": "pbkdf2$sha256$100000$ec8d5d55692882ca6c13ff1996f16017$1aef033417d6d81c6e8fd3e181aeaa231ec81f7c60c2e6d5b64a56b04f37ef9e",
+    "email": "assessor@example.com",
+    "role": "Assessor",
+    "fullName": "Security Assessor",
+    "createdAt": "2025-11-24T02:42:55.642Z",
+    "isActive": true,
+    "updatedAt": "2025-11-27T00:15:36.593Z"
+  },
+  {
+    "id": "6199b906-027d-4395-8b33-4dab4602883b",
+    "username": "mkesharw",
+    "password": "pbkdf2$sha256$100000$ca3f21548c11a26ed928e067e20d2a39$16a060a8837e150b02fbb8309871d9cc326b3abb19e3803dee27cb9c2c3938cc",
+    "email": "mukesh.kesharwani@adobe.com",
+    "role": "Platform Admin",
+    "fullName": "Mukesh Kesharwani",
+    "createdAt": "2025-11-24T02:48:35.593Z",
+    "isActive": true,
+    "updatedAt": "2025-11-27T00:46:22.760Z"
+  }
+]
